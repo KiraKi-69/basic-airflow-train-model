@@ -12,7 +12,7 @@ default_args = {
     'retry_delay': timedelta(minutes=5),
 }
 
-IMAGE='harbor.neoflex.ru/dognauts/dognauts-airflow:2.5.3-py3.8-v6ACC'
+IMAGE='harbor.neoflex.ru/dognauts/airflow:2.7.1-python3.9-v1'
 
 pod_override = k8s.V1Pod(
             spec=k8s.V1PodSpec(
