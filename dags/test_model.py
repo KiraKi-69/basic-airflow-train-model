@@ -25,7 +25,7 @@ with DAG(
     default_args=default_args,
     schedule_interval='@once',
     dagrun_timeout=timedelta(minutes=60),
-    description='run csgb model on batch data',
+    description='run csgb model on batch data :)',
     start_date = airflow.utils.dates.days_ago(1),
     catchup=False
 ) as dag:
