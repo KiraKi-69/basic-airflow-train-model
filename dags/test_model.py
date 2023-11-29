@@ -20,7 +20,6 @@ pod_override = k8s.V1Pod(
             )
 )
 
-
 with DAG(
     dag_id = "run_csgb",
     default_args=default_args,
@@ -52,13 +51,10 @@ with DAG(
         
         df_test['results'] = results
         
-
-
         engine = create_engine('postgresql://postgres:postgres@cassandra-postgresql.feast-db:5432/FEAST_OFFLINE_STORE')
         df.to_sql('results_cs', engine, index=False, if_exists='replace')
-                            
-                            
-                            
+        
+                                
     run_model = PythonOperator(
         task_id="run_model",
         python_callable=finetune_model,
