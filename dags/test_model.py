@@ -37,20 +37,26 @@ with DAG(
         import mlflow
         from sqlalchemy import create_engine
         
+        # Указываем имя датасета для применения
         dataset_name = "test_cs"
-
+        
+        # Выгружаем датасет из базы
         engine = pg.connect("host=cassandra-postgresql.feast-db port=5432 dbname=FEAST_OFFLINE_STORE user=postgres password=postgres")
         df_test = pd.read_sql(f'select * from {dataset_name}', con=engine)
-
+        
+        # Выгружаем зарегестрированную модель по имени и стейджу
         model_name = "csgb"
         stage = "Production"
 
         model = mlflow.sklearn.load_model(f"models:/{model_name}/{stage}") 
         
+        # Предсказываем кредитный рейтинг клиентов из базы
         results = model.predict(df_test)
         
+        # Сохраняем результат в столбец results 
         df_test['results'] = results
         
+        # Сохраняем таблицу с результатами по клиентам в postgre
         engine = create_engine('postgresql://postgres:postgres@cassandra-postgresql.feast-db:5432/FEAST_OFFLINE_STORE')
         df_test.to_sql('results_cs', engine, index=False, if_exists='replace')
         
