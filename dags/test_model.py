@@ -52,7 +52,7 @@ with DAG(
         df_test['results'] = results
         
         engine = create_engine('postgresql://postgres:postgres@cassandra-postgresql.feast-db:5432/FEAST_OFFLINE_STORE')
-        df.to_sql('results_cs', engine, index=False, if_exists='replace')
+        df_test.to_sql('results_cs', engine, index=False, if_exists='replace')
         
                                 
     run_model = PythonOperator(
